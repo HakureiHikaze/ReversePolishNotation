@@ -1,8 +1,13 @@
 package wiki.gtnh.hikaze.Calculator;
 import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.regex.*;
 import java.util.stream.Stream;
 
+import wiki.gtnh.hikaze.Operators.CalculateUnit;
+import wiki.gtnh.hikaze.Operators.CalculateUnitFactory;
+import wiki.gtnh.hikaze.Operators.Operators;
 import wiki.gtnh.hikaze.Util.Exceptions.InvalidExpressionException;
 
 public class Calculator {
@@ -18,6 +23,14 @@ public class Calculator {
         }
     }
     public static String[] GenerateRPN(String[] legalExpressionArray){
+        Queue<CalculateUnit> originQueue = new ConcurrentLinkedQueue<>();
+        for (String unit: legalExpressionArray) {
+            try{
+                originQueue.add(CalculateUnitFactory.Generate(unit));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         return null;
     }
     public static double calculate(String[] legalRPN){
